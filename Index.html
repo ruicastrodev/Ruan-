@@ -3,15 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>MEDECELL - Ordem de Serviço</title>
+  <title>MEDECELL - Sistema de Ordens de Serviço</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background-color: #0d0f12; color: #f1f5f9; padding: 10px; padding-bottom: 40px; }
     
     .container { max-width: 600px; margin: 0 auto; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 16px; }
     
+    /* TELA DE LOGIN */
+    #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; }
+    .login-box { background: #161b22; border: 1px solid #30363d; padding: 24px; border-radius: 16px; width: 100%; max-width: 360px; }
+    
     /* CABEÇALHO / LOGO */
-    .header { text-align: center; border-bottom: 2px solid #3b82f6; padding-bottom: 15px; margin-bottom: 15px; }
+    .header { text-align: center; border-bottom: 2px solid #3b82f6; padding-bottom: 15px; margin-bottom: 15px; position: relative; }
     .brand-title { font-size: 22px; font-weight: 900; color: #ffffff; letter-spacing: 1px; }
     .brand-title span { color: #3b82f6; }
     .brand-sub { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; }
@@ -21,7 +25,6 @@
     .section-title { font-size: 12px; font-weight: bold; color: #3b82f6; text-transform: uppercase; margin: 15px 0 8px 0; border-left: 3px solid #3b82f6; padding-left: 6px; }
     
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
     
     .group { margin-bottom: 8px; }
     .group label { display: block; font-size: 10px; color: #94a3b8; font-weight: bold; text-transform: uppercase; margin-bottom: 3px; }
@@ -39,22 +42,50 @@
     .btn-print { background: #10b981; margin-top: 8px; }
     .btn-print:hover { background: #059669; }
 
+    .logout-btn { position: absolute; right: 0; top: 0; background: #30363d; color: #94a3b8; border: none; padding: 6px 10px; border-radius: 6px; font-size: 10px; cursor: pointer; }
+    
+    .hidden { display: none !important; }
+
     /* MODO IMPRESSÃO / PDF LIMPO */
     @media print {
       body { background: #fff; color: #000; padding: 0; }
       .container { border: none; padding: 0; max-width: 100%; background: #fff; }
       .input, select, textarea { background: #fff !important; color: #000 !important; border: 1px solid #ccc !important; }
-      .btn { display: none !important; }
+      .btn, .logout-btn { display: none !important; }
       .os-info { background: #f1f5f9 !important; border: 1px solid #ccc !important; color: #000 !important; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <!-- TELA DE LOGIN -->
+  <div id="login-screen" class="container">
+    <div class="login-box">
+      <div style="font-size: 32px; margin-bottom: 10px;">🔐</div>
+      <h2 style="font-size: 18px; color: #fff; margin-bottom: 4px;">MEDECELL</h2>
+      <p style="font-size: 11px; color: #94a3b8; margin-bottom: 20px;">Acesso Restrito ao Técnico</p>
+      
+      <form onsubmit="handleLogin(event)">
+        <div class="group" style="text-align: left;">
+          <label>Nome do Usuário</label>
+          <input type="text" id="login-user" class="input" placeholder="Digite seu nome" required>
+        </div>
+        <div class="group" style="text-align: left; margin-top: 10px;">
+          <label>Senha de Acesso</label>
+          <input type="password" id="login-pass" class="input" placeholder="Digite a senha" required>
+        </div>
+        <p id="login-error" class="hidden" style="color: #ef4444; font-size: 11px; margin-top: 8px;">Nome ou senha incorretos!</p>
+        <button type="submit" class="btn" style="margin-top: 15px;">Entrar no Sistema</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SISTEMA PRINCIPAL (OCULTO ATÉ O LOGIN) -->
+  <div id="app-screen" class="container hidden">
 
     <!-- CABEÇALHO DA MARCA -->
     <div class="header">
+      <button onclick="handleLogout()" class="logout-btn">Sair</button>
       <div class="brand-title">MEDE<span>CELL</span></div>
       <div class="brand-sub">— Assistência Técnica Especializada —</div>
       <div style="font-size:10px; color:#cbd5e1; margin-top:4px;">📱 Apple | Samsung | Xiaomi | Motorola</div>
@@ -208,12 +239,47 @@
   </div>
 
   <script>
-    // Preencher data atual
-    var hoje = new Date();
-    document.getElementById('os-date').innerText = hoje.toLocaleDateString('pt-BR');
+    // Verificar se já está logado na sessão
+    window.onload = function() {
+      if (sessionStorage.getItem('medecell_logged') === 'true') {
+        showApp();
+      }
+    };
 
-    // Gerar número de OS aleatório simples
-    document.getElementById('os-number').innerText = Math.floor(1000 + Math.random() * 9000);
+    function handleLogin(e) {
+      e.preventDefault();
+      var user = document.getElementById('login-user').value.trim();
+      var pass = document.getElementById('login-pass').value.trim();
+      var err = document.getElementById('login-error');
+
+      if (user.toLowerCase() === 'ruan' && pass === '120317Rj') {
+        sessionStorage.setItem('medecell_logged', 'true');
+        showApp();
+      } else {
+        err.classList.remove('hidden');
+      }
+    }
+
+    function showApp() {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('app-screen').classList.remove('hidden');
+
+      // Preencher data atual
+      var hoje = new Date();
+      document.getElementById('os-date').innerText = hoje.toLocaleDateString('pt-BR');
+
+      // Gerar número de OS aleatório
+      document.getElementById('os-number').innerText = Math.floor(1000 + Math.random() * 9000);
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('medecell_logged');
+      document.getElementById('app-screen').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('login-user').value = '';
+      document.getElementById('login-pass').value = '';
+      document.getElementById('login-error').classList.add('hidden');
+    }
 
     function sendWhatsAppOS() {
       var nome = document.getElementById('cli-name').value || 'Cliente';
