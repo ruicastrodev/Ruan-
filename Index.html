@@ -3,59 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Ordem de Serviço - Modelo Web Assistência</title>
+  <title>MEDECELL - Sistema de Ordens de Serviço</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: #f8fafc; color: #0f172a; padding: 20px 10px 60px 10px; }
+    body { background-color: #0d0f12; color: #f1f5f9; padding: 10px; padding-bottom: 40px; }
 
-    .os-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; max-width: 500px; margin: 0 auto; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .container { max-width: 600px; margin: 0 auto; background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 16px; }
 
-    .section-title { font-size: 15px; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-top: 18px; margin-bottom: 6px; letter-spacing: 0.3px; }
-    .section-subtitle { font-size: 12px; color: #64748b; font-style: italic; margin-bottom: 12px; line-height: 1.4; }
+    /* TELA DE LOGIN */
+    #login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; text-align: center; }
+    .login-box { background: #161b22; border: 1px solid #30363d; padding: 24px; border-radius: 16px; width: 100%; max-width: 360px; }
+    
+    /* CABEÇALHO / LOGO */
+    .header { text-align: center; border-bottom: 2px solid #3b82f6; padding-bottom: 15px; margin-bottom: 15px; position: relative; }
+    .brand-title { font-size: 22px; font-weight: 900; color: #ffffff; letter-spacing: 1px; }
+    .brand-title span { color: #3b82f6; }
+    .brand-sub { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; }
 
-    hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+    .section-title { font-size: 12px; font-weight: bold; color: #3b82f6; text-transform: uppercase; margin: 15px 0 8px 0; border-left: 3px solid #3b82f6; padding-left: 6px; }
 
-    .input-label { font-size: 11px; font-weight: 700; color: #64748b; margin-bottom: 4px; text-transform: uppercase; }
-    .input-field { width: 100%; background: #f8fafc; border: 1px solid #cbd5e1; color: #0f172a; padding: 12px; border-radius: 10px; font-size: 13px; outline: none; margin-bottom: 12px; }
-    .input-field:focus { border-color: #059669; background: #ffffff; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
 
-    /* SEÇÃO DE REGISTRO FOTOGRÁFICO DE ENTRADA */
-    .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-    .photo-box { border: 2px dashed #a7f3d0; background: #f0fdf4; border-radius: 12px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; padding: 8px; position: relative; overflow: hidden; transition: all 0.2s; }
-    .photo-box:hover { background: #ecfdf5; border-color: #059669; }
-    .photo-box i { font-size: 22px; color: #059669; margin-bottom: 4px; }
-    .photo-box span { font-size: 11px; font-weight: 700; color: #334155; line-height: 1.2; }
+    .group { margin-bottom: 8px; }
+    .group label { display: block; font-size: 10px; color: #94a3b8; font-weight: bold; text-transform: uppercase; margin-bottom: 3px; }
+    .input { width: 100%; background: #0d0f12; border: 1px solid #30363d; color: #fff; padding: 8px 10px; border-radius: 6px; font-size: 12px; outline: none; }
+    .input:focus { border-color: #3b82f6; }
+
+    .os-info { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px; margin-bottom: 12px; font-size: 11px; color: #cbd5e1; }
+
+    /* SEÇÃO DE REGISTRO FOTOGRÁFICO DE ENTRADA (UPLOAD DE FOTOS) */
+    .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; margin-bottom: 12px; }
+    .photo-box { border: 2px dashed #1d4ed8; background: #0f172a; border-radius: 8px; height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; padding: 6px; position: relative; overflow: hidden; }
+    .photo-box:hover { border-color: #3b82f6; background: #1e293b; }
+    .photo-box i { font-size: 20px; color: #3b82f6; margin-bottom: 4px; }
+    .photo-box span { font-size: 10px; font-weight: bold; color: #94a3b8; }
     .photo-box input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
-    .photo-preview { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
+    .photo-preview { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
 
-    .btn-submit { width: 100%; background: #059669; color: #ffffff; font-weight: 800; border: none; padding: 14px; border-radius: 12px; font-size: 14px; cursor: pointer; margin-top: 10px; text-transform: uppercase; box-shadow: 0 2px 6px rgba(5,150,105,0.2); }
-    .btn-submit:hover { background: #047857; }
+    /* BOTÕES */
+    .btn { width: 100%; background: #2563eb; color: #fff; font-weight: bold; border: none; padding: 12px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: background 0.2s; }
+    .btn:hover { background: #1d4ed8; }
+    .btn-print { background: #10b981; margin-top: 8px; }
+    .btn-print:hover { background: #059669; }
 
-    .footer-info { display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; margin-top: 20px; }
+    .logout-btn { position: absolute; right: 0; top: 0; background: #30363d; color: #94a3b8; border: none; padding: 6px 10px; border-radius: 6px; font-size: 10px; cursor: pointer; }
+    
+    .hidden { display: none !important; }
+
+    /* MODO IMPRESSÃO / PDF LIMPO */
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .container { border: none; padding: 0; max-width: 100%; background: #fff; }
+      .input, select, textarea { background: #fff !important; color: #000 !important; border: 1px solid #ccc !important; }
+      .btn, .logout-btn { display: none !important; }
+      .os-info { background: #f1f5f9 !important; border: 1px solid #ccc !important; color: #000 !important; }
+      .photo-box { border-color: #ccc; background: #fff; }
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <div class="os-card">
-    
-    <!-- 1 & 2. DADOS DO CLIENTE E APARELHO -->
-    <div class="input-label">NOME DO CLIENTE</div>
-    <input type="text" id="os-client" class="input-field" placeholder="Nome completo do cliente">
+  <!-- TELA DE LOGIN -->
+  <div id="login-screen" class="container">
+    <div class="login-box">
+      <div style="font-size: 32px; margin-bottom: 10px;">🔐</div>
+      <h2 style="font-size: 18px; color: #fff; margin-bottom: 4px;">MEDECELL</h2>
+      <p style="font-size: 11px; color: #94a3b8; margin-bottom: 20px;">Acesso Restrito ao Técnico</p>
+      
+      <form onsubmit="handleLogin(event)">
+        <div class="group" style="text-align: left;">
+          <label>Nome do Usuário</label>
+          <input type="text" id="login-user" class="input" placeholder="Digite seu nome" required>
+        </div>
+        <div class="group" style="text-align: left; margin-top: 10px;">
+          <label>Senha de Acesso</label>
+          <input type="password" id="login-pass" class="input" placeholder="Digite a senha" required>
+        </div>
+        <p id="login-error" class="hidden" style="color: #ef4444; font-size: 11px; margin-top: 8px;">Nome ou senha incorretos!</p>
+        <button type="submit" class="btn" style="margin-top: 15px;">Entrar no Sistema</button>
+      </form>
+    </div>
+  </div>
 
-    <div class="input-label">MODELO DO APARELHO / IMEI</div>
-    <input type="text" id="os-device" class="input-field" placeholder="Ex: iPhone 13 / Samsung A54">
+  <!-- SISTEMA PRINCIPAL (OCULTO ATÉ O LOGIN) -->
+  <div id="app-screen" class="container hidden">
 
-    <hr>
+    <!-- CABEÇALHO DA MARCA -->
+    <div class="header">
+      <button onclick="handleLogout()" class="logout-btn">Sair</button>
+      <div class="brand-title">MEDE<span>CELL</span></div>
+      <div class="brand-sub">— Assistência Técnica Especializada —</div>
+      <div style="font-size:10px; color:#cbd5e1; margin-top:4px;">📱 Apple | Samsung | Xiaomi | Motorola</div>
+    </div>
+
+    <!-- INFORMAÇÕES DA OS -->
+    <div class="os-info grid-2">
+      <div><strong>Nº da OS:</strong> #<span id="os-number">---</span></div>
+      <div style="text-align: right;"><strong>Data:</strong> <span id="os-date">--/--/----</span></div>
+    </div>
+
+    <!-- 1. DADOS DO CLIENTE -->
+    <div class="section-title">1. Dados do Cliente</div>
+    <div class="group">
+      <label>Nome Completo do Cliente</label>
+      <input type="text" id="cli-name" class="input" placeholder="Ex: João da Silva">
+    </div>
+    <div class="grid-2">
+      <div class="group">
+        <label>Telefone / WhatsApp</label>
+        <input type="text" id="cli-phone" class="input" placeholder="(21) 99999-9999">
+      </div>
+      <div class="group">
+        <label>CPF / Documento</label>
+        <input type="text" id="cli-cpf" class="input" placeholder="000.000.000-00">
+      </div>
+    </div>
+
+    <!-- 2. DADOS DO APARELHO -->
+    <div class="section-title">2. Identificação do Aparelho</div>
+    <div class="grid-2">
+      <div class="group">
+        <label>Marca e Modelo</label>
+        <input type="text" id="dev-model" class="input" placeholder="Ex: iPhone 11 64GB">
+      </div>
+      <div class="group">
+        <label>IMEI / Número de Série</label>
+        <input type="text" id="dev-imei" class="input" placeholder="IMEI do aparelho">
+      </div>
+    </div>
 
     <!-- 3. REGISTRO FOTOGRÁFICO DE ENTRADA (UPLOAD DE FOTOS) -->
-    <div class="section-title">3. REGISTRO FOTOGRÁFICO DE ENTRADA (UPLOAD DE FOTOS)</div>
-    <div class="section-subtitle">
-      No site: O técnico poderá anexar 4 fotos direto da câmera do celular/tablet no momento do recebimento.
+    <div class="section-title">3. Registro Fotográfico de Entrada (Upload de Fotos)</div>
+    <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+      Anexe fotos do estado físico do aparelho no momento do recebimento:
     </div>
 
     <div class="photo-grid">
-      <!-- Foto 1: Tela/Display -->
+      <!-- Foto 1: Tela / Display -->
       <div class="photo-box" id="box-1">
         <i class="fa-solid fa-camera"></i>
         <span>Foto da Tela / Display</span>
@@ -69,7 +155,7 @@
         <input type="file" accept="image/*" capture="environment" onchange="loadPreview(event, 'box-2')">
       </div>
 
-      <!-- Foto 3: Lateral/Botões -->
+      <!-- Foto 3: Lateral / Botões -->
       <div class="photo-box" id="box-3">
         <i class="fa-solid fa-camera"></i>
         <span>Foto da Lateral / Botões</span>
@@ -84,24 +170,75 @@
       </div>
     </div>
 
-    <hr>
-
-    <!-- 4. RELATO DO CLIENTE & DIAGNÓSTICO INICIAL -->
-    <div class="section-title">4. RELATO DO CLIENTE & DIAGNÓSTICO INICIAL</div>
-    
-    <div class="input-label" style="margin-top: 10px;">RECLAMAÇÃO PRINCIPAL / DEFEITO INFORMADO</div>
-    <textarea id="os-defect" class="input-field" style="height: 85px; resize: none;" placeholder="Aparelho não liga após queda / Tela quebrada e sem dar imagem / Bateria descarregando rápido."></textarea>
-
-    <button type="button" onclick="salvarOS()" class="btn-submit">Salvar Ordem de Serviço</button>
-
-    <div class="footer-info">
-      <span>Ordem de Serviço - Modelo Web Assistência</span>
-      <span>Página 1 de 2</span>
+    <!-- 4. RELATO DO CLIENTE & DIAGNÓSTICO -->
+    <div class="section-title">4. Relato do Cliente & Diagnóstico Inicial</div>
+    <div class="group">
+      <label>Reclamação Principal / Defeito Informado</label>
+      <textarea id="dev-defect" class="input" rows="3" placeholder="Aparelho não liga após queda / Tela quebrada..."></textarea>
     </div>
+
+    <!-- 5. VALORES E ORÇAMENTO -->
+    <div class="section-title">5. Valoração do Serviço</div>
+    <div class="grid-3">
+      <div class="group">
+        <label>Valor Peça (R$)</label>
+        <input type="number" id="val-part" class="input" placeholder="0,00" oninput="calcTotal()">
+      </div>
+      <div class="group">
+        <label>Mão de Obra (R$)</label>
+        <input type="number" id="val-labor" class="input" placeholder="0,00" oninput="calcTotal()">
+      </div>
+      <div class="group">
+        <label>Total Final (R$)</label>
+        <input type="text" id="val-total" class="input" placeholder="R$ 0,00" readonly style="font-weight: bold; color: #10b981;">
+      </div>
+    </div>
+
+    <!-- AÇÕES -->
+    <button onclick="sendWhatsAppOS()" class="btn" style="margin-top: 15px;">Enviar OS para WhatsApp do Cliente</button>
+    <button onclick="window.print()" class="btn btn-print">Imprimir / Salvar PDF da OS</button>
 
   </div>
 
   <script>
+    window.onload = function() {
+      if (sessionStorage.getItem('medecell_logged') === 'true') {
+        showApp();
+      }
+    };
+
+    function handleLogin(e) {
+      e.preventDefault();
+      var user = document.getElementById('login-user').value.trim();
+      var pass = document.getElementById('login-pass').value.trim();
+      var err = document.getElementById('login-error');
+
+      if (user.toLowerCase() === 'ruan' && pass === '120317Rj') {
+        sessionStorage.setItem('medecell_logged', 'true');
+        showApp();
+      } else {
+        err.classList.remove('hidden');
+      }
+    }
+
+    function showApp() {
+      document.getElementById('login-screen').classList.add('hidden');
+      document.getElementById('app-screen').classList.remove('hidden');
+      
+      var hoje = new Date();
+      document.getElementById('os-date').innerText = hoje.toLocaleDateString('pt-BR');
+      document.getElementById('os-number').innerText = Math.floor(1000 + Math.random() * 9000);
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('medecell_logged');
+      document.getElementById('app-screen').classList.add('hidden');
+      document.getElementById('login-screen').classList.remove('hidden');
+      document.getElementById('login-user').value = '';
+      document.getElementById('login-pass').value = '';
+      document.getElementById('login-error').classList.add('hidden');
+    }
+
     function loadPreview(event, boxId) {
       var file = event.target.files[0];
       if (file) {
@@ -109,7 +246,6 @@
         reader.onload = function(e) {
           var box = document.getElementById(boxId);
           
-          // Remove foto anterior se houver
           var oldImg = box.querySelector('.photo-preview');
           if (oldImg) oldImg.remove();
 
@@ -122,16 +258,27 @@
       }
     }
 
-    function salvarOS() {
-      var client = document.getElementById('os-client').value.trim();
-      var device = document.getElementById('os-device').value.trim();
+    function calcTotal() {
+      var part = parseFloat(document.getElementById('val-part').value) || 0;
+      var labor = parseFloat(document.getElementById('val-labor').value) || 0;
+      var total = part + labor;
+      document.getElementById('val-total').value = 'R$ ' + total.toFixed(2);
+    }
 
-      if (!client || !device) {
-        alert('Por favor, preencha o nome do cliente e o aparelho!');
-        return;
+    function sendWhatsAppOS() {
+      var nome = document.getElementById('cli-name').value || 'Cliente';
+      var fone = document.getElementById('cli-phone').value.replace(/\D/g, '');
+      var modelo = document.getElementById('dev-model').value || 'Aparelho';
+      var osNum = document.getElementById('os-number').innerText;
+      var total = document.getElementById('val-total').value || 'R$ 0,00';
+
+      var msg = 'Olá ' + nome + '! Sua Ordem de Serviço #' + osNum + ' na MEDECELL para o aparelho ' + modelo + ' foi registrada com sucesso. Valor total: ' + total;
+      
+      if (fone) {
+        window.open('https://api.whatsapp.com/send?phone=55' + fone + '&text=' + encodeURIComponent(msg), '_blank');
+      } else {
+        alert('Por favor, informe o telefone do cliente para enviar pelo WhatsApp!');
       }
-
-      alert('Ordem de Serviço salva com sucesso com os registros fotográficos de entrada!');
     }
   </script>
 </body>
