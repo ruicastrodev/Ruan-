@@ -20,7 +20,8 @@
     .brand-title span { color: #3b82f6; }
     .brand-sub { font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; }
 
-    .section-title { font-size: 12px; font-weight: bold; color: #3b82f6; text-transform: uppercase; margin: 15px 0 8px 0; border-left: 3px solid #3b82f6; padding-left: 6px; }
+    .section-title { font-size: 12px; font-weight: bold; color: #3b82f6; text-transform: uppercase; margin: 15px 0 8px 0; border-left: 3px solid #3b82f6; padding-left: 6px; display: flex; justify-content: space-between; align-items: center; }
+    .badge-tag { background: #1e3a8a; color: #93c5fd; font-size: 9px; padding: 2px 6px; border-radius: 4px; border: 1px solid #3b82f6; }
 
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
@@ -32,7 +33,7 @@
 
     .os-info { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 10px; margin-bottom: 12px; font-size: 11px; color: #cbd5e1; }
 
-    /* SEÇÃO DE REGISTRO FOTOGRÁFICO DE ENTRADA (UPLOAD DE FOTOS) */
+    /* UPLOAD DE FOTOS DE ENTRADA */
     .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; margin-bottom: 12px; }
     .photo-box { border: 2px dashed #1d4ed8; background: #0f172a; border-radius: 8px; height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; cursor: pointer; padding: 6px; position: relative; overflow: hidden; }
     .photo-box:hover { border-color: #3b82f6; background: #1e293b; }
@@ -40,6 +41,21 @@
     .photo-box span { font-size: 10px; font-weight: bold; color: #94a3b8; }
     .photo-box input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
     .photo-preview { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
+
+    /* TABELAS DE CHECKLIST */
+    .checklist-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 11px; }
+    .checklist-table th, .checklist-table td { border: 1px solid #30363d; padding: 6px 8px; text-align: left; }
+    .checklist-table th { background: #0d0f12; color: #94a3b8; font-size: 10px; text-transform: uppercase; }
+    .checklist-table td { background: #161b22; }
+    .chk-opt { display: flex; gap: 8px; font-size: 10px; align-items: center; }
+    .chk-opt label { cursor: pointer; display: flex; align-items: center; gap: 3px; color: #cbd5e1; }
+
+    .tbl-input { width: 100%; background: #0d0f12; border: 1px solid #30363d; color: #fff; padding: 4px 6px; border-radius: 4px; font-size: 10px; }
+
+    /* TERMOS E ASSINATURAS */
+    .terms-box { background: #0d0f12; border: 1px solid #30363d; border-radius: 6px; padding: 8px; font-size: 9px; color: #94a3b8; line-height: 1.3; margin-bottom: 12px; }
+    .sign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; text-align: center; }
+    .sign-line { border-top: 1px solid #475569; margin-top: 25px; padding-top: 4px; font-size: 10px; color: #94a3b8; }
 
     /* BOTÕES */
     .btn { width: 100%; background: #2563eb; color: #fff; font-weight: bold; border: none; padding: 12px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: background 0.2s; }
@@ -51,14 +67,24 @@
     
     .hidden { display: none !important; }
 
-    /* MODO IMPRESSÃO / PDF LIMPO */
+    /* MODO IMPRESSÃO / PDF LIMPO (A4 BRANCO) */
     @media print {
-      body { background: #fff; color: #000; padding: 0; }
-      .container { border: none; padding: 0; max-width: 100%; background: #fff; }
-      .input, select, textarea { background: #fff !important; color: #000 !important; border: 1px solid #ccc !important; }
+      body { background: #fff !important; color: #000 !important; padding: 0; }
+      .container { border: none !important; padding: 0 !important; max-width: 100% !important; background: #fff !important; color: #000 !important; }
+      .brand-title { color: #000 !important; }
+      .brand-title span { color: #2563eb !important; }
+      .section-title { color: #2563eb !important; border-left-color: #2563eb !important; }
+      .badge-tag { background: #eff6ff !important; color: #1e40af !important; border-color: #93c5fd !important; }
+      .input, select, textarea, .tbl-input { background: #fff !important; color: #000 !important; border: 1px solid #ccc !important; }
+      .os-info { background: #f8fafc !important; border: 1px solid #ccc !important; color: #000 !important; }
+      .photo-box { border-color: #aaa !important; background: #f8fafc !important; color: #000 !important; }
+      .photo-box span { color: #000 !important; }
+      .checklist-table th { background: #f1f5f9 !important; color: #000 !important; border-color: #ccc !important; }
+      .checklist-table td { background: #fff !important; color: #000 !important; border-color: #ccc !important; }
+      .chk-opt label { color: #000 !important; }
+      .terms-box { background: #f8fafc !important; border-color: #ccc !important; color: #333 !important; }
       .btn, .logout-btn { display: none !important; }
-      .os-info { background: #f1f5f9 !important; border: 1px solid #ccc !important; color: #000 !important; }
-      .photo-box { border-color: #ccc; background: #fff; }
+      .sign-line { border-top-color: #000 !important; color: #000 !important; }
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -87,7 +113,7 @@
     </div>
   </div>
 
-  <!-- SISTEMA PRINCIPAL (OCULTO ATÉ O LOGIN) -->
+  <!-- SISTEMA PRINCIPAL -->
   <div id="app-screen" class="container hidden">
 
     <!-- CABEÇALHO DA MARCA -->
@@ -134,35 +160,28 @@
       </div>
     </div>
 
-    <!-- 3. REGISTRO FOTOGRÁFICO DE ENTRADA (UPLOAD DE FOTOS) -->
+    <!-- 3. REGISTRO FOTOGRÁFICO DE ENTRADA -->
     <div class="section-title">3. Registro Fotográfico de Entrada (Upload de Fotos)</div>
     <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
       Anexe fotos do estado físico do aparelho no momento do recebimento:
     </div>
 
     <div class="photo-grid">
-      <!-- Foto 1: Tela / Display -->
       <div class="photo-box" id="box-1">
         <i class="fa-solid fa-camera"></i>
         <span>Foto da Tela / Display</span>
         <input type="file" accept="image/*" capture="environment" onchange="loadPreview(event, 'box-1')">
       </div>
-
-      <!-- Foto 2: Tampa Traseira -->
       <div class="photo-box" id="box-2">
         <i class="fa-solid fa-camera"></i>
         <span>Foto da Tampa Traseira</span>
         <input type="file" accept="image/*" capture="environment" onchange="loadPreview(event, 'box-2')">
       </div>
-
-      <!-- Foto 3: Lateral / Botões -->
       <div class="photo-box" id="box-3">
         <i class="fa-solid fa-camera"></i>
         <span>Foto da Lateral / Botões</span>
         <input type="file" accept="image/*" capture="environment" onchange="loadPreview(event, 'box-3')">
       </div>
-
-      <!-- Foto 4: Detalhe de Avaria -->
       <div class="photo-box" id="box-4">
         <i class="fa-solid fa-camera"></i>
         <span>Foto Detalhe de Avaria</span>
@@ -177,25 +196,205 @@
       <textarea id="dev-defect" class="input" rows="3" placeholder="Aparelho não liga após queda / Tela quebrada..."></textarea>
     </div>
 
-    <!-- 5. VALORES E ORÇAMENTO -->
-    <div class="section-title">5. Valoração do Serviço</div>
+    <!-- 5. CHECKLIST DE TESTES DE ENTRADA - ANDROID -->
+    <div class="section-title">
+      <span>5. Checklist de Testes de Entrada - Android</span>
+      <span class="badge-tag">SISTEMA ANDROID</span>
+    </div>
+
+    <table class="checklist-table">
+      <thead>
+        <tr>
+          <th style="width: 30%;">Item Testado</th>
+          <th style="width: 35%;">Status na Entrada</th>
+          <th style="width: 35%;">Observação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Aparelho Liga?</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_liga" value="Sim"> Sim</label>
+              <label><input type="radio" name="and_liga" value="Não"> Não</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Não foi possível testar tudo se desligado"></td>
+        </tr>
+        <tr>
+          <td><strong>Botões (Power, Vol+, Vol-)</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_bot" value="OK"> OK</label>
+              <label><input type="radio" name="and_bot" value="Defeito"> Com Defeito</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Botão Power duro / sem clique"></td>
+        </tr>
+        <tr>
+          <td><strong>Touch Screen & Display</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_touch" value="OK"> OK</label>
+              <label><input type="radio" name="and_touch" value="Falhando"> Falhando</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Mancha preta na parte superior"></td>
+        </tr>
+        <tr>
+          <td><strong>Biometria / Digital</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_bio" value="OK"> OK</label>
+              <label><input type="radio" name="and_bio" value="Não Funciona"> Não Funciona</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Sensor sob a tela OK"></td>
+        </tr>
+        <tr>
+          <td><strong>Carregamento / Conector</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_con" value="OK"> OK</label>
+              <label><input type="radio" name="and_con" value="Folga"> Com Folga</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Carrega apenas em posição específica"></td>
+        </tr>
+        <tr>
+          <td><strong>Câmeras (Traseira e Frontal)</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_cam" value="OK"> OK</label>
+              <label><input type="radio" name="and_cam" value="Embaçada/Falha"> Embaçada/Falha</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Câmera frontal sem foco"></td>
+        </tr>
+        <tr>
+          <td><strong>Áudio (Auricular, Mic, Alto-Falante)</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_aud" value="OK"> OK</label>
+              <label><input type="radio" name="and_aud" value="Chiado"> Com Chiado</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Som principal baixo"></td>
+        </tr>
+        <tr>
+          <td><strong>Wi-Fi / Bluetooth / Chip SIM</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="and_net" value="OK"> OK</label>
+              <label><input type="radio" name="and_net" value="Sem Sinal"> Sem Sinal</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Testado com chip da loja"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 6. CHECKLIST DE TESTES DE ENTRADA - IOS (IPHONE) -->
+    <div class="section-title">
+      <span>6. Checklist de Testes de Entrada - iOS (iPhone)</span>
+      <span class="badge-tag">SISTEMA IOS</span>
+    </div>
+
+    <table class="checklist-table">
+      <thead>
+        <tr>
+          <th style="width: 30%;">Item Testado</th>
+          <th style="width: 35%;">Status na Entrada</th>
+          <th style="width: 35%;">Observação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Face ID / Touch ID</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="ios_face" value="Ativo"> Ativo</label>
+              <label><input type="radio" name="ios_face" value="Indisponível"> Indisponível</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Aviso de 'Face ID não disponível'"></td>
+        </tr>
+        <tr>
+          <td><strong>Saúde da Bateria (%)</strong></td>
+          <td>
+            <div class="chk-opt" style="gap: 4px;">
+              <input type="text" class="tbl-input" style="width: 45px;" placeholder="%">
+              <label><input type="checkbox"> Manutenção</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Informar % exibida nas configurações"></td>
+        </tr>
+        <tr>
+          <td><strong>Botões (Power, Volume, Chave Silencioso)</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="ios_bot" value="OK"> OK</label>
+              <label><input type="radio" name="ios_bot" value="Defeito"> Com Defeito</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Chave do silencioso frouxa"></td>
+        </tr>
+        <tr>
+          <td><strong>True Tone & Screen Display</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="ios_tt" value="Ativo"> Ativo</label>
+              <label><input type="radio" name="ios_tt" value="Ausente"> Ausente/Sem D.O.</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Aviso de tela não genuína (se houver)"></td>
+        </tr>
+        <tr>
+          <td><strong>Conector Lightning / USB-C & MagSafe</strong></td>
+          <td>
+            <div class="chk-opt">
+              <label><input type="radio" name="ios_con" value="OK"> OK</label>
+              <label><input type="radio" name="ios_con" value="Defeito"> Com Defeito</label>
+            </div>
+          </td>
+          <td><input type="text" class="tbl-input" placeholder="Testado carregamento nos dois lados"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 7. ORÇAMENTO E SERVIÇOS PREVISTOS -->
+    <div class="section-title">7. Orçamento e Serviços Previstos</div>
     <div class="grid-3">
-      <div class="group">
-        <label>Valor Peça (R$)</label>
-        <input type="number" id="val-part" class="input" placeholder="0,00" oninput="calcTotal()">
+      <div class="group" style="grid-column: span 2;">
+        <label>Serviço / Peça a ser Trocada</label>
+        <input type="text" id="serv-desc" class="input" placeholder="Ex: Troca de Frontal Completa + Bateria">
       </div>
       <div class="group">
-        <label>Mão de Obra (R$)</label>
-        <input type="number" id="val-labor" class="input" placeholder="0,00" oninput="calcTotal()">
-      </div>
-      <div class="group">
-        <label>Total Final (R$)</label>
-        <input type="text" id="val-total" class="input" placeholder="R$ 0,00" readonly style="font-weight: bold; color: #10b981;">
+        <label>Valor Total Estimado (R$)</label>
+        <input type="number" id="val-total" class="input" placeholder="R$ 350,00" style="font-weight: bold; color: #10b981;">
       </div>
     </div>
 
+    <div class="group">
+      <label>Status da OS</label>
+      <div class="chk-opt" style="gap: 15px; margin-top: 4px;">
+        <label><input type="radio" name="os_status" value="Aguardando Aprovacao" checked> [ ] Aguardando Aprovação</label>
+        <label><input type="radio" name="os_status" value="Aprovado"> [ ] Aprovado</label>
+      </div>
+    </div>
+
+    <!-- TERMOS DE GARANTIA -->
+    <div class="terms-box">
+      <strong>TERMOS DE SERVIÇO E GARANTIA:</strong> 1. Os aparelhos não retirados no prazo de 90 dias após a conclusão do orçamento estarão sujeitos a venda para custeio de despesas, conforme legislação vigente. 2. A garantia cobre exclusivamente as peças substituídas e os serviços executados pelo prazo de 90 dias. 3. Danos causados por líquidos, quedas ou intervenção de terceiros anulam a garantia. 4. Aparelhos que dão entrada desligados ou que não permitem o teste completo de funções serão testados após o conserto principal, não nos responsabilizando por defeitos pré-existentes em outros componentes.
+    </div>
+<!-- ASSINATURAS -->
+    <div class="sign-grid">
+      <div class="sign-line">Assinatura do Técnico / Atendente</div>
+      <div class="sign-line">Assinatura do Cliente (Concordo com os termos)</div>
+    </div>
+
     <!-- AÇÕES -->
-    <button onclick="sendWhatsAppOS()" class="btn" style="margin-top: 15px;">Enviar OS para WhatsApp do Cliente</button>
+    <button onclick="sendWhatsAppOS()" class="btn" style="margin-top: 20px;">Enviar OS para WhatsApp do Cliente</button>
     <button onclick="window.print()" class="btn btn-print">Imprimir / Salvar PDF da OS</button>
 
   </div>
@@ -258,21 +457,14 @@
       }
     }
 
-    function calcTotal() {
-      var part = parseFloat(document.getElementById('val-part').value) || 0;
-      var labor = parseFloat(document.getElementById('val-labor').value) || 0;
-      var total = part + labor;
-      document.getElementById('val-total').value = 'R$ ' + total.toFixed(2);
-    }
-
     function sendWhatsAppOS() {
       var nome = document.getElementById('cli-name').value || 'Cliente';
       var fone = document.getElementById('cli-phone').value.replace(/\D/g, '');
       var modelo = document.getElementById('dev-model').value || 'Aparelho';
       var osNum = document.getElementById('os-number').innerText;
-      var total = document.getElementById('val-total').value || 'R$ 0,00';
+      var total = document.getElementById('val-total').value || '350.00';
 
-      var msg = 'Olá ' + nome + '! Sua Ordem de Serviço #' + osNum + ' na MEDECELL para o aparelho ' + modelo + ' foi registrada com sucesso. Valor total: ' + total;
+      var msg = 'Olá ' + nome + '! Sua Ordem de Serviço #' + osNum + ' na MEDECELL para o aparelho ' + modelo + ' foi registrada com sucesso. Valor total estimado: R$ ' + total;
       
       if (fone) {
         window.open('https://api.whatsapp.com/send?phone=55' + fone + '&text=' + encodeURIComponent(msg), '_blank');
@@ -283,3 +475,5 @@
   </script>
 </body>
 </html>
+     
+    
